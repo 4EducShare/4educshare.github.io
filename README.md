@@ -81,8 +81,8 @@
 </small>
             </p>
         </div>
-       <!--  <a href="https://docs.google.com/forms/d/e/1FAIpQLSc6H_8tI2vYXEt7XNazJ6PaHAwuNF5k4oGnkGNc6ttRjXbtZQ/viewform?usp=sf_link" class="button-2"> Plus d'infos</a> -->
-        <a href="Participer.html" class="button-2"> Proposer un sujet</a>
+ <a href="https://docs.google.com/forms/d/e/1FAIpQLSc6H_8tI2vYXEt7XNazJ6PaHAwuNF5k4oGnkGNc6ttRjXbtZQ/viewform?usp=sf_link" class="button-2"> Proposer un sujet</a> 
+              <!--  <a href="Participer.html" class="button-2"></a>lus d'infos -->
     </article>
     <article style="background-image:url(1.6\ Article\ Image\ 2.jpg);">
         <div class="overlay">
@@ -92,7 +92,8 @@
 </small>
             </p>
         </div>
-        <a href="Proposer.html" class="button-2"> Recevoir un sujet</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc6H_8tI2vYXEt7XNazJ6PaHAwuNF5k4oGnkGNc6ttRjXbtZQ/viewform?usp=sf_link" class="button-2"> Recevoir un sujet</a> 
+        <!--    <a href="Proposer.html" class="button-2"> Recevoir un sujet</a> -->
        <!-- <a href="#contact" class="button-2"> Plus d'infos</a> -->
     </article>
 </div>
