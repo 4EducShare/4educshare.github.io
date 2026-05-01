@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Contactez l'équipe HydroGénie – Questions, suggestions, signalement de bugs ou collaboration."/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <title>Contact – HydroGénie</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--blue:#0369a1;--blue-lt:#0ea5e9;--dark:#0c1a2e;--card:#112240;--border:#1e3a5f;--text:#ccd6f6;--muted:#8892b0;--accent:#64ffda}
+    body{font-family:'Segoe UI',sans-serif;background:var(--dark);color:var(--text);line-height:1.7}
+    a{color:var(--blue-lt);text-decoration:none}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(12,26,46,0.97);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(8px)}
+    .logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--blue-lt),var(--accent));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+    .logo-text{font-size:1.25rem;font-weight:700;color:#fff}
+    .logo-text span{color:var(--accent)}
+    nav ul{list-style:none;display:flex;gap:28px}
+    nav ul a{color:var(--muted);font-size:0.9rem;transition:color .2s}
+    nav ul a:hover,nav ul a.active{color:var(--accent)}
+    .hero{text-align:center;padding:72px 20px 52px;background:radial-gradient(ellipse at 50% 0%,rgba(14,165,233,0.12) 0%,transparent 70%)}
+    .hero-badge{display:inline-block;background:rgba(100,255,218,0.1);color:var(--accent);border:1px solid rgba(100,255,218,0.3);border-radius:30px;padding:6px 18px;font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+    .hero h1{font-size:2.4rem;font-weight:800;color:#fff;margin-bottom:12px}
+    .hero h1 span{color:var(--blue-lt)}
+    .hero p{color:var(--muted);max-width:520px;margin:0 auto;font-size:1rem}
+    .container{max-width:960px;margin:0 auto;padding:52px 24px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+    @media(max-width:700px){.grid-2{grid-template-columns:1fr}}
+    .info-cards{display:flex;flex-direction:column;gap:20px}
+    .info-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;display:flex;gap:16px;align-items:flex-start}
+    .info-card .ic{font-size:1.8rem;flex-shrink:0}
+    .info-card h3{font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:4px}
+    .info-card p,.info-card a{font-size:0.88rem;color:var(--muted)}
+    .info-card a:hover{color:var(--accent)}
+    form{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px;display:flex;flex-direction:column;gap:18px}
+    form h2{font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:4px}
+    label{font-size:0.85rem;color:var(--muted);margin-bottom:4px;display:block}
+    input,textarea,select{width:100%;padding:11px 16px;background:#0c1a2e;border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.92rem;font-family:inherit;outline:none;transition:border .2s}
+    input:focus,textarea:focus,select:focus{border-color:var(--blue-lt)}
+    textarea{resize:vertical;min-height:130px}
+    .btn{padding:12px 28px;background:linear-gradient(135deg,var(--blue),var(--blue-lt));color:#fff;border:none;border-radius:30px;font-size:0.95rem;font-weight:600;cursor:pointer;transition:opacity .2s;align-self:flex-start}
+    .btn:hover{opacity:.85}
+    .success{display:none;background:rgba(100,255,218,0.1);border:1px solid rgba(100,255,218,0.3);color:var(--accent);border-radius:10px;padding:14px 18px;font-size:0.9rem}
+    footer{text-align:center;padding:28px;border-top:1px solid var(--border);color:var(--muted);font-size:0.82rem;margin-top:60px}
+    footer a{color:var(--blue-lt)}
+    @media(max-width:600px){nav{padding:14px 20px}nav ul{display:none}.hero h1{font-size:1.8rem}form{padding:22px}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="/"><div class="logo-icon">💧</div><div class="logo-text">Hydro<span>Génie</span></div></a>
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="gc-apps.html">Applications GC</a></li>
+    <li><a href="articles2.html">Articles</a></li>
+    <li><a href="apropos.html">À Propos</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+<section class="hero">
+  <div class="hero-badge">Nous contacter</div>
+  <h1>Une question ? <span>Écrivez-nous</span></h1>
+  <p>Notre équipe répond à toutes vos questions techniques, suggestions d'outils ou demandes de collaboration.</p>
+</section>
+<div class="container">
+  <div class="grid-2">
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="ic">✉️</div>
+        <div>
+          <h3>Email</h3>
+          <a href="mailto:contact@hydreau.org">contact@hydreau.org</a>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic">🌐</div>
+        <div>
+          <h3>Site web</h3>
+          <a href="https://www.hydreau.org" target="_blank">www.hydreau.org</a>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic">🕐</div>
+        <div>
+          <h3>Délai de réponse</h3>
+          <p>Nous répondons généralement sous 24 à 48 heures ouvrables.</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic">🤝</div>
+        <div>
+          <h3>Collaboration</h3>
+          <p>Vous êtes ingénieur ou développeur ? Proposez-nous vos outils ou articles.</p>
+        </div>
+      </div>
+    </div>
+    <form id="contactForm" onsubmit="sendForm(event)">
+      <h2>Formulaire de contact</h2>
+      <div>
+        <label for="nom">Nom complet</label>
+        <input type="text" id="nom" placeholder="Votre nom" required/>
+      </div>
+      <div>
+        <label for="email">Adresse email</label>
+        <input type="email" id="email" placeholder="votre@email.com" required/>
+      </div>
+      <div>
+        <label for="sujet">Sujet</label>
+        <select id="sujet">
+          <option>Question technique</option>
+          <option>Signalement de bug</option>
+          <option>Suggestion d'outil</option>
+          <option>Collaboration / Partenariat</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div>
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Décrivez votre demande..." required></textarea>
+      </div>
+      <button class="btn" type="submit">Envoyer le message ✈</button>
+      <div class="success" id="success">✅ Message envoyé ! Nous vous répondrons sous 48h.</div>
+    </form>
+  </div>
+</div>
+<footer>
+  <p>© 2026 <a href="https://www.hydreau.org" target="_blank">HydroGénie / Hydreau.org</a> — Tous droits réservés |
+  <a href="/politique-confidentialite.html">Politique de confidentialité</a> |
+  <a href="/conditions-utilisation.html">Conditions d'utilisation</a></p>
+</footer>
+<script>
+function sendForm(e){
+  e.preventDefault();
+  const nom    = document.getElementById('nom').value.trim();
+  const email  = document.getElementById('email').value.trim();
+  const sujet  = document.getElementById('sujet').value;
+  const msg    = document.getElementById('message').value.trim();
+
+  const to      = 'ridoine.h123@gmail.com';
+  const subject = encodeURIComponent('[HydroGénie] ' + sujet + ' – ' + nom);
+  const body    = encodeURIComponent(
+    'Nom : ' + nom + '\n' +
+    'Email : ' + email + '\n' +
+    'Sujet : ' + sujet + '\n\n' +
+    msg
+  );
+
+  window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
+
+  document.getElementById('success').style.display = 'block';
+  document.getElementById('contactForm').reset();
+  setTimeout(() => document.getElementById('success').style.display = 'none', 6000);
+}
+</script>
+</body>
+</html>

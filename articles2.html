@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Articles techniques sur l'hydraulique, le génie civil, la topographie et les énergies renouvelables – HydroGénie"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <title>Articles Techniques – HydroGénie</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--blue:#0369a1;--blue-lt:#0ea5e9;--dark:#0c1a2e;--card:#112240;--border:#1e3a5f;--text:#ccd6f6;--muted:#8892b0;--accent:#64ffda}
+    body{font-family:'Segoe UI',sans-serif;background:var(--dark);color:var(--text);line-height:1.7}
+    a{color:var(--blue-lt);text-decoration:none}
+    a:hover{color:var(--accent)}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(12,26,46,0.97);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(8px)}
+    .logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--blue-lt),var(--accent));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+    .logo-text{font-size:1.25rem;font-weight:700;color:#fff}
+    .logo-text span{color:var(--accent)}
+    nav ul{list-style:none;display:flex;gap:28px}
+    nav ul a{color:var(--muted);font-size:0.9rem;transition:color .2s}
+    nav ul a:hover,nav ul a.active{color:var(--accent)}
+    .hero{text-align:center;padding:64px 20px 48px;background:radial-gradient(ellipse at 50% 0%,rgba(14,165,233,0.1) 0%,transparent 70%)}
+    .hero h1{font-size:2.4rem;font-weight:800;color:#fff;margin-bottom:12px}
+    .hero h1 span{color:var(--blue-lt)}
+    .hero p{color:var(--muted);max-width:560px;margin:0 auto;font-size:1rem}
+    .container{max-width:1100px;margin:0 auto;padding:48px 24px}
+    .articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px;margin-bottom:60px}
+    .article-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s;display:flex;flex-direction:column;cursor:pointer}
+    .article-card:hover{transform:translateY(-5px);border-color:var(--blue-lt);box-shadow:0 12px 36px rgba(14,165,233,0.13)}
+    .article-thumb{height:150px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;background:linear-gradient(135deg,#0c2a4a,#1e3a5f)}
+    .article-body{padding:22px;flex:1;display:flex;flex-direction:column;gap:8px}
+    .article-cat{font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent);font-weight:600}
+    .article-body h2{font-size:1rem;font-weight:700;color:#fff;line-height:1.4}
+    .article-body p{font-size:0.86rem;color:var(--muted);flex:1}
+    .article-meta{display:flex;align-items:center;justify-content:space-between;font-size:0.76rem;color:var(--muted);margin-top:8px;padding-top:10px;border-top:1px solid var(--border)}
+    .read-btn{display:inline-block;margin-top:12px;padding:8px 18px;background:linear-gradient(135deg,var(--blue),var(--blue-lt));color:#fff;border-radius:30px;font-size:0.82rem;font-weight:600;transition:opacity .2s;border:none;cursor:pointer}
+    .read-btn:hover{opacity:.85}
+    #article-view{display:none;max-width:820px;margin:0 auto 60px}
+    #article-view.open{display:block}
+    .art-header{margin-bottom:28px}
+    .art-header .cat{font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent);font-weight:600;margin-bottom:10px}
+    .art-header h1{font-size:1.9rem;font-weight:800;color:#fff;line-height:1.3;margin-bottom:10px}
+    .art-header .meta{font-size:0.82rem;color:var(--muted);display:flex;gap:18px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--border)}
+    .art-content h2{font-size:1.15rem;font-weight:700;color:var(--blue-lt);margin:28px 0 10px}
+    .art-content h3{font-size:1rem;font-weight:600;color:var(--accent);margin:20px 0 8px}
+    .art-content p{font-size:0.94rem;color:var(--text);margin-bottom:14px;line-height:1.85}
+    .art-content ul,.art-content ol{padding-left:22px;margin-bottom:14px}
+    .art-content li{font-size:0.94rem;color:var(--text);margin-bottom:7px;line-height:1.7}
+    .art-content strong{color:var(--accent)}
+    .formula{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--blue-lt);border-radius:8px;padding:14px 18px;font-family:monospace;font-size:0.9rem;color:var(--blue-lt);margin:16px 0;white-space:pre-line}
+    .note{background:rgba(100,255,218,0.07);border:1px solid rgba(100,255,218,0.2);border-radius:8px;padding:14px 18px;font-size:0.88rem;color:var(--accent);margin:16px 0}
+    .back-btn{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;padding:9px 22px;background:var(--border);color:var(--text);border-radius:30px;font-size:0.85rem;cursor:pointer;border:none;transition:background .2s}
+    .back-btn:hover{background:var(--blue)}
+    footer{text-align:center;padding:28px;border-top:1px solid var(--border);color:var(--muted);font-size:0.82rem}
+    footer a{color:var(--blue-lt)}
+    @media(max-width:600px){nav{padding:14px 20px}nav ul{display:none}.hero h1{font-size:1.7rem}.art-header h1{font-size:1.4rem}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html"><div class="logo-icon">💧</div><div class="logo-text">Hydro<span>Génie</span></div></a>
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="gc-apps.html">Applications GC</a></li>
+    <li><a href="articles2.html" class="active">Articles</a></li>
+    <li><a href="apropos.html">À Propos</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<section class="hero">
+  <h1>Articles <span>Techniques</span></h1>
+  <p>Guides, tutoriels et ressources pour les ingénieurs en hydraulique, génie civil et énergies renouvelables.</p>
+</section>
+<div class="container">
+  <div class="articles-grid" id="grid"></div>
+  <div id="article-view"></div>
+</div>
+<footer>
+  <p>© 2026 <a href="https://www.hydreau.org" target="_blank">HydroGénie / Hydreau.org</a> — Tous droits réservés |
+  <a href="politique-confidentialite.html">Confidentialité</a> | <a href="conditions-utilisation.html">CGU</a></p>
+</footer>
+<script>
+const A = [];
+
+// Article 1
+A.push({id:1,icon:"💧",cat:"Hydraulique",date:"15 mars 2026",readTime:"8 min",
+title:"Dimensionnement d'un réseau d'eau potable : méthode et calculs",
+summary:"Guide complet pour concevoir un réseau AEP : débits, pressions, diamètres et pertes de charge.",
+body:[
+  ["h2","Introduction"],
+  ["p","Le dimensionnement d'un réseau d'alimentation en eau potable (AEP) est une étape fondamentale dans tout projet d'hydraulique urbaine ou rurale. Un réseau mal dimensionné peut entraîner des pressions insuffisantes chez les abonnés, des pertes d'eau importantes ou des coûts d'exploitation élevés."],
+  ["h2","1. Estimation des besoins en eau"],
+  ["p","La première étape consiste à estimer les besoins en eau de la population desservie. On distingue la consommation domestique (80 à 150 l/hab/j), industrielle, les besoins incendie (60 m³/h pendant 2h) et les pertes réseau (15 à 20%)."],
+  ["h3","Calcul du débit de pointe"],
+  ["formula","Qp = Qmoy × Cp\nCp = 1,5 à 2,5 selon la taille de l'agglomération"],
+  ["h2","2. Choix des diamètres de conduites"],
+  ["p","Le diamètre est déterminé en fonction du débit et de la vitesse admissible (0,5 à 1,5 m/s pour la distribution, 1,0 à 2,0 m/s pour le transport)."],
+  ["formula","D = √(4Q / π·V)\nD : diamètre (m), Q : débit (m³/s), V : vitesse (m/s)"],
+  ["h3","Pertes de charge linéaires (Darcy-Weisbach)"],
+  ["formula","J = λ × (L/D) × (V²/2g)"],
+  ["h2","3. Vérification des pressions"],
+  ["p","La pression minimale au point le plus défavorable doit être d'au moins 1 bar (10 m CE). La pression maximale ne doit pas dépasser 6 bars pour éviter les dommages aux installations intérieures."],
+  ["note","💡 Utilisez EPANET ou WaterGEMS pour simuler les pressions et débits dans l'ensemble du réseau."],
+  ["h2","4. Choix des matériaux"],
+  ["p","Les matériaux courants sont le PVC-U (jusqu'à 16 bars), le PEHD (flexible, résistant aux chocs), la fonte ductile (grandes conduites) et l'acier (transport haute pression)."],
+  ["h2","5. Ouvrages annexes"],
+  ["p","Un réseau AEP comprend des réservoirs de stockage (capacité = 1/3 de la consommation journalière), stations de pompage, vannes de sectionnement, ventouses et compteurs."],
+  ["h2","Conclusion"],
+  ["p","Le dimensionnement d'un réseau AEP nécessite une approche méthodique intégrant l'estimation des besoins, le calcul hydraulique et la vérification des pressions. L'utilisation d'outils de simulation permet d'optimiser le réseau et de garantir sa performance à long terme."]
+]});
+
+// Article 2
+A.push({id:2,icon:"☀️",cat:"Énergie Solaire",date:"2 avril 2026",readTime:"10 min",
+title:"Pompage solaire photovoltaïque : guide complet de dimensionnement",
+summary:"Comment dimensionner un système de pompage alimenté par panneaux solaires pour l'irrigation ou l'AEP.",
+body:[
+  ["h2","Introduction"],
+  ["p","Le pompage solaire photovoltaïque est une solution adoptée dans les zones rurales et isolées pour l'alimentation en eau potable et l'irrigation agricole. Il est autonome, sans coût de carburant et avec un entretien minimal."],
+  ["h2","1. Évaluation des besoins en eau"],
+  ["p","Définir le volume d'eau journalier nécessaire (Vj) en m³/jour. Pour un village de 500 habitants avec une dotation de 20 l/hab/j, le besoin est de 10 m³/jour."],
+  ["h2","2. Hauteur manométrique totale (HMT)"],
+  ["formula","HMT = Nd + Hr + Pertes de charge\nPertes de charge ≈ 5 à 10% de (Nd + Hr)"],
+  ["h2","3. Énergie hydraulique nécessaire"],
+  ["formula","Eh = ρ × g × Vj × HMT / (3600 × η_pompe)\nη_pompe = 0,40 à 0,65 pour les pompes immergées"],
+  ["h2","4. Dimensionnement du champ solaire"],
+  ["p","L'irradiation solaire au Maghreb est de 5 à 7 kWh/m²/jour."],
+  ["formula","Puissance PV = Eh / (Irradiation × η_système)\nη_système = 0,75 à 0,85"],
+  ["h2","5. Choix de la pompe et du variateur"],
+  ["p","Les pompes immergées DC sont directement alimentées par les panneaux. Les pompes AC avec variateur de fréquence sont plus efficaces et adaptent la vitesse à l'ensoleillement disponible."],
+  ["note","💡 Le variateur de fréquence (VFD) augmente le volume pompé de 20 à 30% en optimisant le fonctionnement selon l'énergie solaire disponible."],
+  ["h2","6. Stockage de l'eau"],
+  ["p","Un réservoir de stockage de 1 à 2 jours de consommation est indispensable pour assurer la continuité la nuit et les jours nuageux."],
+  ["h2","Conclusion"],
+  ["p","Le pompage solaire est une solution économique et durable pour les zones sans accès au réseau électrique. Un dimensionnement rigoureux garantit la fiabilité du système sur 20 à 25 ans."]
+]});
+
+// Article 3
+A.push({id:3,icon:"🏗️",cat:"Génie Civil",date:"10 avril 2026",readTime:"9 min",
+title:"Calcul des semelles filantes en béton armé selon les Eurocodes",
+summary:"Méthode complète de dimensionnement des semelles filantes : charges, contraintes du sol et ferraillage.",
+body:[
+  ["h2","Introduction"],
+  ["p","Les semelles filantes sont des fondations superficielles continues utilisées sous les murs porteurs. Leur dimensionnement doit respecter l'Eurocode 7 (géotechnique) et l'Eurocode 2 (béton armé)."],
+  ["h2","1. Données de base"],
+  ["p","Il faut disposer de la charge linéaire transmise par le mur (kN/ml), la contrainte admissible du sol (100 à 300 kPa) et la profondeur d'ancrage."],
+  ["h2","2. Largeur de la semelle"],
+  ["formula","B = q / σadm\nB : largeur (m), q : charge linéaire (kN/ml)"],
+  ["h2","3. Hauteur de la semelle"],
+  ["formula","h ≥ (B - b) / 4\nb : largeur du mur, B : largeur de la semelle\nHauteur minimale : 25 cm pour semelles armées"],
+  ["h2","4. Calcul du ferraillage"],
+  ["h3","Moment fléchissant transversal"],
+  ["formula","M = σsol × (B-b)² / 8"],
+  ["h3","Section d'acier"],
+  ["formula","As = M / (0,9 × d × fyd)\nd : hauteur utile, fyd : limite élastique de calcul"],
+  ["note","💡 Pour les sols argileux, vérifiez le tassement à long terme par consolidation. Un tassement différentiel excessif peut provoquer des fissures dans la structure."],
+  ["h2","Conclusion"],
+  ["p","Le dimensionnement des semelles filantes nécessite une bonne connaissance des propriétés du sol et des charges appliquées. L'utilisation des Eurocodes garantit la sécurité et la durabilité des fondations."]
+]});
+
+// Article 4
+A.push({id:4,icon:"🗺️",cat:"Topographie",date:"18 avril 2026",readTime:"7 min",
+title:"Calcul de cubatures par la méthode des profils en travers",
+summary:"Comment calculer les volumes de terrassement (déblais et remblais) à partir des profils en travers.",
+body:[
+  ["h2","Introduction"],
+  ["p","Le calcul des cubatures est essentiel dans tout projet de terrassement : routes, canaux, barrages, plateformes. Il permet d'estimer les volumes de terres à excaver (déblais) et à mettre en place (remblais)."],
+  ["h2","1. Levé topographique et profils en travers"],
+  ["p","On établit des profils en travers perpendiculaires à l'axe du projet, à intervalles réguliers (20 à 50 m en terrain régulier, 10 m en terrain accidenté). Chaque profil distingue les zones en déblai et en remblai."],
+  ["h2","2. Calcul des surfaces de profils"],
+  ["formula","S = ½ |Σ(xi × yi+1 - xi+1 × yi)|"],
+  ["h2","3. Méthode des prismes (moyenne des sections)"],
+  ["formula","V = (S1 + S2) / 2 × L\nS1, S2 : surfaces des deux profils (m²), L : distance entre profils (m)"],
+  ["h3","Méthode de Simpson (plus précise)"],
+  ["formula","V = L/6 × (S1 + 4×Sm + S2)\nSm : surface du profil médian interpolé"],
+  ["h2","4. Diagramme de Brückner"],
+  ["p","Le diagramme de Brückner (courbe des volumes cumulés) permet de visualiser l'équilibre déblais/remblais et d'optimiser les mouvements de terres."],
+  ["note","💡 Un coefficient de foisonnement (1,1 à 1,4 selon la nature du sol) doit être appliqué aux volumes de déblais pour obtenir le volume en vrac à transporter."],
+  ["h2","Conclusion"],
+  ["p","Le calcul des cubatures conditionne directement le budget des travaux de terrassement. L'utilisation de Covadis ou AutoCAD Civil 3D permet d'automatiser ces calculs et de réduire les erreurs."]
+]});
+
+// Article 5
+A.push({id:5,icon:"⚡",cat:"Électricité",date:"20 avril 2026",readTime:"6 min",
+title:"Calcul de la section des câbles électriques : méthode et critères",
+summary:"Comment choisir la bonne section de câble selon le courant, la chute de tension et la protection.",
+body:[
+  ["h2","Introduction"],
+  ["p","Le choix de la section des câbles électriques est une étape critique dans tout projet d'installation électrique. Une section sous-dimensionnée entraîne des échauffements dangereux et des pertes d'énergie importantes."],
+  ["h2","1. Critères de dimensionnement"],
+  ["p","La section est déterminée par trois critères : critère thermique (courant admissible), critère de chute de tension et critère de protection. On retient la section la plus grande."],
+  ["h2","2. Critère thermique"],
+  ["formula","Ib = P / (U × cosφ)  [monophasé]\nIb = P / (√3 × U × cosφ)  [triphasé]"],
+  ["h2","3. Critère de chute de tension"],
+  ["p","Chute de tension admissible : 3% pour l'éclairage, 5% pour la force motrice (NF C 15-100)."],
+  ["formula","ΔU = 2 × ρ × L × Ib / S  [monophasé]\nρ = 0,0225 Ω.mm²/m (cuivre)\nS_min = 2 × ρ × L × Ib / ΔU_max"],
+  ["h2","4. Critère de protection"],
+  ["p","Le courant nominal du disjoncteur (In) doit être inférieur au courant admissible du câble : In ≤ Iz."],
+  ["h2","5. Sections normalisées"],
+  ["p","Sections normalisées (mm²) : 1,5 – 2,5 – 4 – 6 – 10 – 16 – 25 – 35 – 50 – 70 – 95 – 120 – 150 – 185 – 240 – 300. On choisit toujours la section normalisée immédiatement supérieure."],
+  ["note","💡 Pour les câbles enterrés, appliquez un facteur de correction de 0,8 pour la température du sol."],
+  ["h2","Conclusion"],
+  ["p","Le dimensionnement des câbles doit être réalisé avec rigueur pour garantir la sécurité des personnes et des biens. Les logiciels de calcul électrique permettent d'automatiser ces vérifications."]
+]});
+
+// Article 6
+A.push({id:6,icon:"🌱",cat:"Agriculture",date:"24 avril 2026",readTime:"8 min",
+title:"Dimensionnement d'un réseau d'irrigation goutte-à-goutte",
+summary:"Guide pratique pour concevoir un réseau d'irrigation localisée : besoins en eau, hydraulique et équipements.",
+body:[
+  ["h2","Introduction"],
+  ["p","L'irrigation goutte-à-goutte est la technique d'irrigation la plus efficace en termes d'économie d'eau. Elle apporte l'eau directement à la zone racinaire, réduisant les pertes par évaporation et le développement des mauvaises herbes."],
+  ["h2","1. Calcul des besoins en eau des cultures"],
+  ["formula","ETc = Kc × ET0\nET0 : évapotranspiration de référence (Penman-Monteith)\nQ (m³/h/ha) = ETc × 10 / (Efficience × Durée_arrosage)"],
+  ["h2","2. Choix des goutteurs"],
+  ["p","Débit nominal : 2, 4 ou 8 l/h. Espacement selon le sol : 30-40 cm (sableux), 40-60 cm (limoneux), 60-80 cm (argileux)."],
+  ["h2","3. Dimensionnement des rampes"],
+  ["formula","ΔQ/Q ≤ 10% → ΔH ≤ 20% de la pression nominale du goutteur"],
+  ["p","Diamètre de rampe : PE 16 ou 20 mm. Longueur maximale limitée par la variation de débit admissible."],
+  ["h2","4. Station de tête"],
+  ["p","La station de tête comprend : filtre à sable + filtre à disques, régulateur de pression, injecteur d'engrais (fertigation) et compteur d'eau."],
+  ["note","💡 Un programme d'irrigation automatisé permet d'optimiser les apports en eau et de réduire la main-d'œuvre."],
+  ["h2","Conclusion"],
+  ["p","L'irrigation goutte-à-goutte bien dimensionnée permet d'économiser 30 à 50% d'eau par rapport à l'irrigation de surface, tout en améliorant les rendements agricoles."]
+]});
+
+// Article 7
+A.push({id:7,icon:"🌊",cat:"Hydraulique",date:"25 avril 2026",readTime:"9 min",
+title:"Dimensionnement d'un canal d'irrigation trapézoïdal",
+summary:"Méthode de calcul d'un canal à section trapézoïdale : débit, vitesse, pente et revêtement.",
+body:[
+  ["h2","Introduction"],
+  ["p","Les canaux d'irrigation sont des ouvrages hydrauliques à surface libre qui acheminent l'eau depuis une source vers les périmètres irrigués. La section trapézoïdale est la plus utilisée car elle offre un bon compromis entre stabilité des berges et efficacité hydraulique."],
+  ["h2","1. Paramètres géométriques"],
+  ["formula","Section mouillée : A = (b + m·h) × h\nPérimètre mouillé : P = b + 2·h·√(1 + m²)\nRayon hydraulique : Rh = A / P"],
+  ["p","Paramètres : b = largeur au plafond, h = hauteur d'eau, m = talus (1,5 pour canal en terre), r = revanche (0,20 à 0,50 m)."],
+  ["h2","2. Formule de Manning-Strickler"],
+  ["formula","Q = K · A · Rh^(2/3) · I^(1/2)\nK : coefficient de Strickler (m^1/3/s)\nI : pente du fond (m/m)"],
+  ["h3","Valeurs du coefficient K"],
+  ["p","Canal béton lisse : K = 70-80 | Canal béton ordinaire : K = 60-70 | Canal en terre entretenu : K = 35-45 | Canal en terre avec végétation : K = 20-30"],
+  ["h2","3. Section hydrauliquement optimale"],
+  ["formula","b = 2·h·(√(1+m²) - m)\nPour m = 1 : b ≈ 0,83·h"],
+  ["h2","4. Vérification de la vitesse"],
+  ["p","Vitesse minimale : 0,3 à 0,5 m/s (éviter la sédimentation). Vitesse maximale en terre : 0,6 à 1,0 m/s. Vitesse maximale en béton : 2,0 à 3,0 m/s."],
+  ["formula","V = Q / A"],
+  ["note","💡 Pour les canaux en terre, prévoyez un revêtement en béton ou géomembrane pour réduire les pertes par infiltration (30 à 50% du débit dans les sols perméables)."],
+  ["h2","Conclusion"],
+  ["p","Le dimensionnement d'un canal d'irrigation nécessite une bonne connaissance de la topographie, des débits à transiter et des caractéristiques du sol. Les logiciels hydrauliques permettent d'optimiser la conception."]
+]});
+
+// Article 8
+A.push({id:8,icon:"🔧",cat:"Hydraulique",date:"25 avril 2026",readTime:"7 min",
+title:"Choix et dimensionnement d'une pompe centrifuge",
+summary:"Comment sélectionner et dimensionner une pompe centrifuge pour un réseau de distribution ou d'irrigation.",
+body:[
+  ["h2","Introduction"],
+  ["p","La pompe centrifuge est l'équipement hydraulique le plus répandu dans les installations de distribution d'eau, d'irrigation et d'assainissement. Son choix et son dimensionnement corrects sont essentiels pour garantir les performances du système."],
+  ["h2","1. Paramètres de fonctionnement"],
+  ["formula","HMT = Hg + Hasp + Href + ΔHc\nHg : hauteur géométrique totale (m)\nΔHc : pertes de charge singulières (coudes, vannes...)"],
+  ["h2","2. Calcul des pertes de charge"],
+  ["formula","J = λ × (L/D) × (V²/2g)  [Darcy-Weisbach]\nJ = 10,67 × Q^1,852 / (C^1,852 × D^4,87)  [Hazen-Williams]\nC = 140 pour PVC neuf, C = 130 pour PEHD"],
+  ["h2","3. Courbe caractéristique du réseau"],
+  ["formula","HMT_réseau = Hg + R × Q²\nR : résistance hydraulique du réseau"],
+  ["p","Le point de fonctionnement est l'intersection de la courbe de la pompe (H-Q) et de la courbe du réseau."],
+  ["h2","4. Critères de sélection"],
+  ["p","On recherche la pompe dont le point de fonctionnement se situe dans la zone de rendement optimal (±20% du débit nominal). Critères : débit, HMT, rendement (η > 70%), NPSH disponible > NPSH requis."],
+  ["h2","5. Vérification anti-cavitation"],
+  ["formula","NPSH_dispo = (Pa/ρg) + Hasp - (Pv/ρg) - Jasp\nNPSH_dispo > NPSH_requis + 0,5 m (marge de sécurité)"],
+  ["h2","6. Couplage de pompes"],
+  ["p","En série : les HMT s'additionnent (augmenter la pression). En parallèle : les débits s'additionnent (augmenter le débit)."],
+  ["note","💡 Pour les pompes immergées (forages), vérifiez que le niveau dynamique ne descend pas en dessous de la crépine d'aspiration."],
+  ["h2","Conclusion"],
+  ["p","Le choix d'une pompe centrifuge doit être basé sur une analyse rigoureuse du réseau hydraulique. Un mauvais choix entraîne une surconsommation d'énergie, une usure prématurée et des pannes fréquentes."]
+]});
+
+// Article 9
+A.push({id:9,icon:"🏛️",cat:"Génie Civil",date:"26 avril 2026",readTime:"8 min",
+title:"Dimensionnement d'un mur de soutènement en béton armé",
+summary:"Méthode de calcul d'un mur de soutènement : stabilité, poussée des terres et ferraillage.",
+body:[
+  ["h2","Introduction"],
+  ["p","Les murs de soutènement retiennent des masses de terre dans les travaux routiers, aménagements en pente et sous-sols de bâtiments. Leur dimensionnement doit garantir la stabilité au renversement, au glissement et à la rupture du sol de fondation."],
+  ["h2","1. Types de murs de soutènement"],
+  ["p","Mur poids (béton cyclopéen), mur cantilever en béton armé (3 à 8 m, le plus économique), mur à contreforts (> 8 m), mur de Berlin (palplanches avec tirants d'ancrage)."],
+  ["h2","2. Calcul de la poussée des terres (Rankine)"],
+  ["formula","Ka = tan²(45° - φ/2)\nPoussée totale : E = ½ × Ka × γ × H²\nγ : poids volumique du sol (kN/m³), H : hauteur (m)"],
+  ["p","La poussée est appliquée au tiers inférieur du mur (H/3 depuis la base)."],
+  ["h2","3. Vérification de la stabilité"],
+  ["formula","Fs_renversement = ΣM_stabilisateurs / ΣM_renversants ≥ 1,5\nFs_glissement = (ΣV × tan δ + c × B) / ΣH ≥ 1,5\nσmax = (ΣV/B) × (1 + 6e/B) ≤ σadm"],
+  ["h2","4. Ferraillage du voile (mur cantilever)"],
+  ["formula","M_base = Ka × γ × H³ / 6"],
+  ["p","La semelle travaille en flexion sous la réaction du sol. On calcule les armatures de la patte avant (en traction) et de la patte arrière séparément."],
+  ["note","💡 Prévoyez toujours un système de drainage derrière le mur (drain géotextile + tuyau perforé) pour éviter la surpression hydrostatique qui peut multiplier la poussée par 2 à 3."],
+  ["h2","Conclusion"],
+  ["p","Le dimensionnement d'un mur de soutènement est une opération délicate qui nécessite une étude géotechnique préalable et le respect des normes en vigueur (Eurocode 7 et Eurocode 2)."]
+]});
+
+// Article 10
+A.push({id:10,icon:"🌧️",cat:"Hydraulique",date:"26 avril 2026",readTime:"7 min",
+title:"Calcul du débit de crue par la méthode rationnelle",
+summary:"Comment estimer le débit de pointe d'un bassin versant pour le dimensionnement des ouvrages hydrauliques.",
+body:[
+  ["h2","Introduction"],
+  ["p","L'estimation du débit de crue est indispensable pour le dimensionnement des ouvrages hydrauliques : ponts, buses, canaux de drainage, bassins de rétention. La méthode rationnelle est la plus utilisée pour les petits bassins versants (< 10 km²)."],
+  ["h2","1. La formule rationnelle"],
+  ["formula","Q = C × i × A / 3,6\nQ : débit de pointe (m³/s)\nC : coefficient de ruissellement (sans dimension)\ni : intensité de pluie (mm/h) pour la durée = temps de concentration\nA : superficie du bassin versant (km²)"],
+  ["h2","2. Coefficient de ruissellement (C)"],
+  ["p","Le coefficient C dépend de la nature du sol et de l'occupation du terrain : zones imperméables (toits, routes) : C = 0,70 à 0,95 | zones urbaines : C = 0,50 à 0,70 | zones agricoles : C = 0,20 à 0,40 | forêts : C = 0,10 à 0,20."],
+  ["h2","3. Temps de concentration (Tc)"],
+  ["p","Le temps de concentration est le temps que met l'eau pour parcourir le chemin hydraulique le plus long du bassin versant jusqu'à l'exutoire."],
+  ["formula","Tc = 0,0195 × L^0,77 / S^0,385  [Kirpich]\nL : longueur du talweg (m), S : pente moyenne (m/m)"],
+  ["h2","4. Intensité de pluie"],
+  ["p","L'intensité de pluie est lue sur les courbes IDF (Intensité-Durée-Fréquence) de la station météorologique la plus proche, pour la période de retour choisie (10, 50 ou 100 ans selon l'importance de l'ouvrage)."],
+  ["formula","i = a / (Tc + b)^c  [formule de Montana]\na, b, c : paramètres régionaux"],
+  ["note","💡 Pour les bassins versants > 10 km², utilisez des méthodes plus élaborées : méthode du Gradex, modèles pluie-débit (HEC-HMS, SWMM)."],
+  ["h2","Conclusion"],
+  ["p","La méthode rationnelle est simple et rapide mais donne des résultats conservateurs. Elle est adaptée aux petits bassins versants urbains et ruraux pour le prédimensionnement des ouvrages de drainage."]
+]});
+
+// Article 11
+A.push({id:11,icon:"🔆",cat:"Énergie Solaire",date:"26 avril 2026",readTime:"8 min",
+title:"Dimensionnement d'un système solaire photovoltaïque autonome",
+summary:"Guide complet pour dimensionner une installation solaire hors réseau : panneaux, batteries et régulateur.",
+body:[
+  ["h2","Introduction"],
+  ["p","Un système solaire photovoltaïque autonome (hors réseau) permet d'alimenter en électricité des sites isolés : maisons rurales, stations de pompage, télécommunications. Son dimensionnement doit garantir l'autonomie du système même pendant les périodes de faible ensoleillement."],
+  ["h2","1. Bilan énergétique"],
+  ["p","La première étape est d'établir le bilan des consommations électriques journalières :"],
+  ["formula","E_jour = Σ(Pi × ti)\nPi : puissance de chaque appareil (W)\nti : durée d'utilisation journalière (h)"],
+  ["h2","2. Dimensionnement du champ solaire"],
+  ["formula","N_panneaux = E_jour / (Ep × η_système)\nEp : énergie produite par panneau/jour = Ppanneau × PSH\nPSH : heures de soleil de pointe (4 à 6 h/j au Maghreb)\nη_système = 0,75 à 0,85"],
+  ["h2","3. Dimensionnement du parc de batteries"],
+  ["p","Les batteries assurent l'autonomie du système pendant les nuits et les jours nuageux. On dimensionne pour 2 à 5 jours d'autonomie selon la criticité de l'installation."],
+  ["formula","C_batteries = E_jour × N_autonomie / (DOD × V_système)\nDOD : profondeur de décharge (0,5 pour batteries plomb, 0,8 pour lithium)\nV_système : tension du système (12, 24 ou 48 V)"],
+  ["h2","4. Choix du régulateur de charge"],
+  ["p","Le régulateur MPPT (Maximum Power Point Tracking) est recommandé car il optimise l'extraction de l'énergie des panneaux (rendement 93 à 97% vs 75 à 80% pour les régulateurs PWM)."],
+  ["formula","I_régulateur ≥ I_court-circuit_panneaux × 1,25"],
+  ["h2","5. Choix de l'onduleur"],
+  ["p","L'onduleur convertit le courant continu des batteries en courant alternatif 220V. Sa puissance doit être supérieure à la somme des puissances des appareils pouvant fonctionner simultanément, avec un coefficient de démarrage pour les moteurs."],
+  ["note","💡 Optez pour un onduleur-chargeur qui intègre le régulateur de charge et permet de recharger les batteries depuis un groupe électrogène en cas de besoin."],
+  ["h2","Conclusion"],
+  ["p","Un système solaire autonome bien dimensionné offre une alimentation électrique fiable et économique sur 20 à 25 ans. La qualité des composants (panneaux, batteries, régulateur) est déterminante pour la durée de vie du système."]
+]});
+
+// Article 12
+A.push({id:12,icon:"📊",cat:"Génie Civil",date:"26 avril 2026",readTime:"9 min",
+title:"Étude de prix et devis dans les projets de génie civil",
+summary:"Comment établir un devis détaillé pour un projet de génie civil : décomposition des prix, bordereau et analyse.",
+body:[
+  ["h2","Introduction"],
+  ["p","L'établissement d'un devis précis est une compétence essentielle pour tout ingénieur en génie civil. Un devis bien structuré permet de chiffrer correctement un projet, d'éviter les dépassements de budget et de remporter des appels d'offres compétitifs."],
+  ["h2","1. Structure d'un devis de génie civil"],
+  ["p","Un devis de génie civil comprend généralement les éléments suivants :"],
+  ["p","Bordereau des prix unitaires (BPU) : liste de tous les prix unitaires des travaux. Détail quantitatif estimatif (DQE) : quantités de chaque poste. Devis estimatif : produit des quantités par les prix unitaires."],
+  ["h2","2. Décomposition du prix unitaire (DPU)"],
+  ["p","Chaque prix unitaire est décomposé en quatre composantes :"],
+  ["formula","PU = Main d'œuvre + Matériaux + Matériel + Frais généraux + Bénéfice\nFrais généraux : 10 à 20% du coût direct\nBénéfice : 5 à 15% selon la concurrence"],
+  ["h2","3. Calcul du coût de la main d'œuvre"],
+  ["formula","Coût MO = Σ(Ni × ti × Ci)\nNi : nombre d'ouvriers de catégorie i\nti : temps unitaire (h/unité)\nCi : coût horaire chargé (salaire + charges sociales)"],
+  ["h2","4. Calcul du coût des matériaux"],
+  ["p","Le coût des matériaux inclut le prix d'achat, le transport jusqu'au chantier, les pertes et chutes (5 à 15% selon le matériau) et les frais de stockage."],
+  ["h2","5. Calcul du coût du matériel"],
+  ["formula","Coût matériel = Amortissement + Entretien + Carburant + Opérateur\nTaux horaire = Valeur d'achat / (Durée de vie × Heures/an)"],
+  ["h2","6. Analyse des offres"],
+  ["p","Lors d'un appel d'offres, l'analyse des offres porte sur le prix global, mais aussi sur la cohérence des prix unitaires, les sous-détails de prix et les variantes proposées. Un prix anormalement bas peut cacher des risques de malfaçon ou d'abandon de chantier."],
+  ["note","💡 Utilisez un logiciel de devis (CBS, Onaya, Batigest) pour automatiser les calculs et générer des documents professionnels. Ces outils permettent également de suivre l'avancement financier du chantier."],
+  ["h2","Conclusion"],
+  ["p","L'établissement d'un devis rigoureux est la base d'une gestion financière saine d'un projet de génie civil. Il nécessite une bonne connaissance des prix du marché local, des rendements de chantier et des contraintes techniques du projet."]
+]});
+
+// Article 13
+A.push({id:13,icon:"🌿",cat:"Environnement",date:"26 avril 2026",readTime:"8 min",
+title:"Conception d'une station d'épuration des eaux usées",
+summary:"Guide de dimensionnement d'une STEP : procédés de traitement, charges polluantes et normes de rejet.",
+body:[
+  ["h2","Introduction"],
+  ["p","Le traitement des eaux usées est une obligation environnementale et sanitaire. Une station d'épuration (STEP) doit éliminer les matières en suspension, la pollution organique (DBO5, DCO) et les nutriments (azote, phosphore) avant rejet dans le milieu naturel."],
+  ["h2","1. Caractérisation des eaux usées"],
+  ["p","Les paramètres de pollution à mesurer sont : DBO5 (Demande Biologique en Oxygène sur 5 jours), DCO (Demande Chimique en Oxygène), MES (Matières En Suspension), NTK (Azote total Kjeldahl) et PT (Phosphore total)."],
+  ["formula","Charge polluante journalière = Concentration × Débit journalier\nDBO5 domestique ≈ 54 g/hab/j\nMES ≈ 90 g/hab/j"],
+  ["h2","2. Filières de traitement"],
+  ["p","Les principales filières sont : boues activées (faible emprise, haute performance), lagunage naturel (grande surface, faible coût d'exploitation), lit bactérien (robuste, adapté aux petites collectivités), disques biologiques."],
+  ["h2","3. Dimensionnement du décanteur primaire"],
+  ["formula","Surface = Q / Vs\nVs : vitesse de sédimentation = 1,5 à 2,5 m/h\nTemps de séjour : 1,5 à 2,5 heures"],
+  ["h2","4. Dimensionnement du bassin d'aération (boues activées)"],
+  ["formula","Volume bassin = Q × DBO5 × (1/Bv)\nBv : charge volumique = 0,3 à 0,6 kg DBO5/m³/j\nBesoins en O2 = 1,5 × DBO5 éliminée (kg O2/kg DBO5)"],
+  ["h2","5. Traitement des boues"],
+  ["p","Les boues produites doivent être épaissies, digérées (réduction de 30 à 40% de la matière organique) et déshydratées avant valorisation agricole ou mise en décharge."],
+  ["note","💡 Le lagunage naturel est recommandé pour les petites collectivités rurales (< 5 000 EH) car il nécessite peu d'énergie et d'entretien, mais requiert une grande surface (5 à 10 m²/EH)."],
+  ["h2","Conclusion"],
+  ["p","Le choix de la filière de traitement dépend de la taille de la collectivité, des contraintes foncières, des ressources humaines disponibles et des normes de rejet imposées par la réglementation locale."]
+]});
+
+// Article 14
+A.push({id:14,icon:"🛣️",cat:"Génie Civil",date:"26 avril 2026",readTime:"9 min",
+title:"Conception géométrique d'une route : tracé en plan et profil en long",
+summary:"Principes et méthodes de conception du tracé routier : alignements, courbes, déclivités et visibilité.",
+body:[
+  ["h2","Introduction"],
+  ["p","La conception géométrique d'une route vise à définir son tracé en plan (vue de dessus), son profil en long (vue de côté) et ses profils en travers (sections transversales). Elle doit garantir la sécurité, le confort et l'économie de la construction."],
+  ["h2","1. Tracé en plan"],
+  ["p","Le tracé en plan est composé d'alignements droits et de courbes circulaires raccordées par des clothoïdes (courbes de transition). Le rayon minimal des courbes dépend de la vitesse de référence :"],
+  ["formula","Rmin = V² / (127 × (e + f))\nV : vitesse de référence (km/h)\ne : dévers maximal (0,07 à 0,10)\nf : coefficient de frottement transversal (0,10 à 0,16)"],
+  ["h2","2. Clothoïde (courbe de transition)"],
+  ["formula","A² = R × L\nA : paramètre de la clothoïde\nR : rayon du cercle, L : longueur de la clothoïde\nCondition : L ≥ V/3,6 (longueur minimale en secondes de parcours)"],
+  ["h2","3. Profil en long"],
+  ["p","Le profil en long représente les variations d'altitude le long de l'axe de la route. Il est composé de rampes, de paliers et de raccordements paraboliques aux changements de déclivité."],
+  ["formula","Déclivité maximale : 6 à 8% en rase campagne\n12% en montagne (cas exceptionnel)\nRayon de raccordement convexe : Rv ≥ V²/1,6 (visibilité d'arrêt)"],
+  ["h2","4. Distance de visibilité"],
+  ["formula","Da = V²/254f + V×t/3,6\nDa : distance d'arrêt (m)\nt : temps de réaction = 2 s\nf : coefficient de frottement longitudinal"],
+  ["h2","5. Profil en travers type"],
+  ["p","Le profil en travers type définit la largeur de la chaussée, des accotements, des fossés et des talus. Pour une route nationale à 2 voies : chaussée 7 m (2 × 3,5 m), accotements 2 × 1,5 m, fossés 2 × 0,5 m."],
+  ["note","💡 Utilisez Covadis ou AutoCAD Civil 3D pour automatiser la conception géométrique et générer automatiquement les profils en travers et le calcul des cubatures."],
+  ["h2","Conclusion"],
+  ["p","La conception géométrique d'une route est un exercice d'optimisation entre les contraintes topographiques, les exigences de sécurité et les coûts de construction. Une bonne conception réduit les accidents et les coûts d'entretien sur toute la durée de vie de la route."]
+]});
+
+// Article 15
+A.push({id:15,icon:"💡",cat:"Électricité",date:"26 avril 2026",readTime:"7 min",
+title:"Dimensionnement d'un disjoncteur : critères et méthode de calcul",
+summary:"Comment choisir et dimensionner un disjoncteur selon le courant d'emploi, le pouvoir de coupure et la sélectivité.",
+body:[
+  ["h2","Introduction"],
+  ["p","Le disjoncteur est le dispositif de protection électrique le plus utilisé dans les installations industrielles et domestiques. Il assure deux fonctions : la protection contre les surcharges (protection thermique) et la protection contre les courts-circuits (protection magnétique)."],
+  ["h2","1. Courant nominal du disjoncteur"],
+  ["p","Le courant nominal In du disjoncteur doit être compris entre le courant d'emploi Ib et le courant admissible du câble Iz :"],
+  ["formula","Ib ≤ In ≤ Iz\nIb : courant d'emploi (A)\nIn : courant nominal du disjoncteur (A)\nIz : courant admissible du câble (A)"],
+  ["h2","2. Pouvoir de coupure"],
+  ["p","Le pouvoir de coupure (PdC) du disjoncteur doit être supérieur au courant de court-circuit présumé au point d'installation :"],
+  ["formula","Icc = U / (√3 × Zt)\nU : tension de réseau (V)\nZt : impédance totale du circuit jusqu'au point de défaut (Ω)"],
+  ["h2","3. Réglage du déclencheur thermique"],
+  ["formula","Ir = 0,9 × Iz  (réglage recommandé)\nIr : courant de réglage thermique"],
+  ["h2","4. Réglage du déclencheur magnétique"],
+  ["p","Le seuil magnétique Isd doit être supérieur au courant de démarrage des moteurs (5 à 8 × In moteur) et inférieur au courant de court-circuit minimal :"],
+  ["formula","Isd ≤ 0,8 × Icc_min"],
+  ["h2","5. Sélectivité"],
+  ["p","La sélectivité garantit que seul le disjoncteur le plus proche du défaut déclenche, sans couper l'alimentation des autres circuits. On distingue la sélectivité ampèremétrique (réglages différents), chronométrique (temporisations) et logique."],
+  ["note","💡 Pour les installations industrielles, utilisez des disjoncteurs avec déclencheurs électroniques qui permettent un réglage précis des seuils thermique et magnétique et offrent des fonctions de mesure et de communication."],
+  ["h2","Conclusion"],
+  ["p","Le choix d'un disjoncteur doit être basé sur une analyse complète du réseau électrique. Un disjoncteur mal dimensionné peut ne pas protéger efficacement l'installation ou déclencher intempestivement, causant des arrêts de production coûteux."]
+]});
+
+// Article 16
+A.push({id:16,icon:"🏔️",cat:"Hydraulique",date:"26 avril 2026",readTime:"10 min",
+title:"Dimensionnement d'un barrage en terre : principes et méthodes",
+summary:"Conception et dimensionnement d'un barrage en remblai : stabilité des talus, filtre et drainage.",
+body:[
+  ["h2","Introduction"],
+  ["p","Les barrages en terre (ou en remblai) sont les ouvrages hydrauliques les plus répandus dans le monde, notamment pour les petits et moyens barrages collinaires. Ils sont économiques, utilisent des matériaux locaux et s'adaptent à des fondations de qualité variable."],
+  ["h2","1. Types de barrages en terre"],
+  ["p","Barrage homogène (un seul matériau), barrage zoné (noyau imperméable + recharges perméables), barrage à masque amont (masque en béton ou géomembrane). Le choix dépend des matériaux disponibles et des conditions de fondation."],
+  ["h2","2. Dimensionnement de la digue"],
+  ["h3","Hauteur de la digue"],
+  ["formula","H_digue = H_retenue + Revanche\nRevanche = 0,5 à 1,5 m selon la hauteur des vagues"],
+  ["h3","Largeur en crête"],
+  ["formula","L_crête = 3 + H/5  (minimum 3 m)\nH : hauteur de la digue (m)"],
+  ["h3","Pentes des talus"],
+  ["p","Talus amont : 2,5H/1V à 3H/1V (selon la nature du matériau). Talus aval : 2H/1V à 2,5H/1V. Ces pentes sont vérifiées par le calcul de stabilité."],
+  ["h2","3. Vérification de la stabilité des talus"],
+  ["p","La stabilité est vérifiée par la méthode des tranches (Bishop, Fellenius) pour les conditions les plus défavorables : fin de construction, vidange rapide et régime permanent."],
+  ["formula","Fs = ΣMr / ΣMd ≥ 1,5 (régime permanent)\nFs ≥ 1,3 (vidange rapide)\nFs ≥ 1,2 (séisme)"],
+  ["h2","4. Filtre et drainage"],
+  ["p","Un système de filtre et drainage est indispensable pour contrôler les fuites et éviter l'érosion interne (renard hydraulique). Il comprend un filtre en gravier entre le noyau et la recharge, et un drain en pied de digue."],
+  ["formula","Critère de filtre (Terzaghi) :\nD15_filtre / D85_sol protégé < 5\nD15_filtre / D15_sol protégé > 4"],
+  ["h2","5. Évacuateur de crues"],
+  ["p","L'évacuateur de crues est l'ouvrage le plus critique d'un barrage. Il doit évacuer la crue de projet (période de retour 1 000 à 10 000 ans selon la classe du barrage) sans que le niveau d'eau dépasse la crête de la digue."],
+  ["note","💡 La rupture d'un barrage en terre est généralement due à la surverse (dépassement de la crête) ou à l'érosion interne. Un entretien régulier et une surveillance continue sont indispensables."],
+  ["h2","Conclusion"],
+  ["p","Le dimensionnement d'un barrage en terre est une opération complexe qui nécessite des études géotechniques approfondies, une modélisation hydraulique et une vérification de la stabilité dans toutes les conditions de fonctionnement."]
+]});
+
+// Article 17
+A.push({id:17,icon:"📐",cat:"Topographie",date:"26 avril 2026",readTime:"7 min",
+title:"Utilisation de Covadis pour le calcul de profils et cubatures",
+summary:"Guide pratique pour utiliser Covadis dans AutoCAD : import de données, profils en long/travers et cubatures.",
+body:[
+  ["h2","Introduction"],
+  ["p","Covadis est une extension d'AutoCAD dédiée aux métiers de la topographie, du génie civil et de l'aménagement. Elle permet de réaliser des calculs de profils en long, profils en travers et cubatures à partir de données topographiques."],
+  ["h2","1. Import des données topographiques"],
+  ["p","Les données peuvent être importées depuis un fichier texte (coordonnées X, Y, Z), un fichier DXF/DWG ou directement depuis un instrument de mesure (station totale, GPS). Dans Covadis, utilisez le menu Saisie > Import de points."],
+  ["h2","2. Création du modèle numérique de terrain (MNT)"],
+  ["p","Le MNT est une représentation numérique du terrain naturel. Dans Covadis, il est créé par triangulation de Delaunay à partir des points topographiques. Il permet de calculer des altitudes en tout point du terrain et de générer des courbes de niveau."],
+  ["formula","Étapes : Points topographiques → Triangulation → MNT → Courbes de niveau"],
+  ["h2","3. Définition de l'axe du projet"],
+  ["p","L'axe du projet (route, canal, réseau) est défini par une polyligne dans AutoCAD. Covadis permet de définir les éléments géométriques (alignements, courbes, clothoïdes) et de calculer les coordonnées de l'axe."],
+  ["h2","4. Calcul du profil en long"],
+  ["p","Le profil en long est calculé automatiquement par intersection de l'axe du projet avec le MNT. Il représente les altitudes du terrain naturel et du projet le long de l'axe. On y définit les déclivités et les raccordements paraboliques."],
+  ["h2","5. Calcul des profils en travers"],
+  ["p","Les profils en travers sont calculés perpendiculairement à l'axe, à intervalles réguliers. Covadis calcule automatiquement les surfaces en déblai et en remblai pour chaque profil."],
+  ["h2","6. Calcul des cubatures"],
+  ["formula","Volume total déblais = Σ(Sd_i + Sd_i+1)/2 × Li\nVolume total remblais = Σ(Sr_i + Sr_i+1)/2 × Li"],
+  ["p","Covadis génère automatiquement le tableau des cubatures et le diagramme de Brückner, permettant d'optimiser les mouvements de terres."],
+  ["note","💡 Covadis permet également de calculer les quantités de matériaux pour les couches de chaussée (grave non traitée, béton bitumineux) à partir des profils en travers types."],
+  ["h2","Conclusion"],
+  ["p","Covadis est un outil indispensable pour les ingénieurs en topographie et génie civil. Sa maîtrise permet de réduire considérablement le temps de calcul et d'améliorer la précision des études de terrassement."]
+]});
+
+// Article 18
+A.push({id:18,icon:"🔩",cat:"Génie Civil",date:"26 avril 2026",readTime:"8 min",
+title:"Calcul d'une poutre en béton armé en flexion simple",
+summary:"Méthode de dimensionnement d'une poutre rectangulaire en béton armé selon l'Eurocode 2.",
+body:[
+  ["h2","Introduction"],
+  ["p","La poutre en béton armé est l'élément structural le plus courant dans les bâtiments et ouvrages de génie civil. Son dimensionnement en flexion simple consiste à déterminer les dimensions de la section et les armatures nécessaires pour résister aux sollicitations."],
+  ["h2","1. Données de calcul"],
+  ["p","Pour dimensionner une poutre, on a besoin de : la portée (L), les charges permanentes (G) et variables (Q), la résistance caractéristique du béton (fck) et la limite élastique de l'acier (fyk)."],
+  ["h2","2. Calcul des sollicitations"],
+  ["formula","Moment fléchissant de calcul :\nMEd = (1,35G + 1,5Q) × L² / 8  [poutre isostatique]\nEffort tranchant : VEd = (1,35G + 1,5Q) × L / 2"],
+  ["h2","3. Prédimensionnement de la section"],
+  ["formula","Hauteur recommandée : h = L/10 à L/15\nLargeur : b = h/2 à h/3\nHauteur utile : d = h - enrobage - Ø/2"],
+  ["h2","4. Calcul des armatures longitudinales"],
+  ["formula","μ = MEd / (b × d² × fcd)\nfcd = fck / 1,5  [résistance de calcul du béton]\nSi μ ≤ μlim : section simplement armée\nα = (1 - √(1 - 2μ)) / 0,8\nAs = MEd / (0,8 × α × d × fyd)"],
+  ["h2","5. Vérification de l'effort tranchant"],
+  ["formula","VRd,c = 0,18/γc × k × (100ρ × fck)^(1/3) × b × d\nk = 1 + √(200/d) ≤ 2,0\nSi VEd > VRd,c : armatures transversales nécessaires"],
+  ["h2","6. Armatures transversales (cadres)"],
+  ["formula","Asw/s = VEd / (0,9 × d × fyd × cotθ)\ncotθ = 2,5 (angle d'inclinaison des bielles)\nEspacement max : s ≤ 0,75 × d"],
+  ["h2","7. Vérification de la flèche"],
+  ["p","La flèche doit être vérifiée en état limite de service (ELS). La condition simplifiée de l'Eurocode 2 est : L/d ≤ K × (11 + 1,5√fck × ρ0/ρ) pour les poutres isostatiques (K = 1)."],
+  ["note","💡 Pour les poutres continues, le moment en travée est réduit par les moments aux appuis. Utilisez un logiciel de calcul de structures (Robot Structural Analysis, ETABS) pour les structures complexes."],
+  ["h2","Conclusion"],
+  ["p","Le dimensionnement d'une poutre en béton armé selon l'Eurocode 2 est une procédure rigoureuse qui garantit la sécurité structurale. La maîtrise de ces calculs est indispensable pour tout ingénieur en génie civil."]
+]});
+
+// Render engine
+const grid = document.getElementById('grid');
+const view = document.getElementById('article-view');
+
+function buildContent(body){
+  return body.map(([type, text]) => {
+    if(type === 'h2') return `<h2>${text}</h2>`;
+    if(type === 'h3') return `<h3>${text}</h3>`;
+    if(type === 'p')  return `<p>${text}</p>`;
+    if(type === 'formula') return `<div class="formula">${text.replace(/\n/g,'<br>')}</div>`;
+    if(type === 'note')    return `<div class="note">${text}</div>`;
+    return '';
+  }).join('');
+}
+
+function showGrid(){
+  grid.style.display = 'grid';
+  view.classList.remove('open');
+  view.innerHTML = '';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function openArticle(id){
+  const a = A.find(x => x.id === id);
+  if(!a) return;
+  grid.style.display = 'none';
+  view.classList.add('open');
+  view.innerHTML = `
+    <button class="back-btn" onclick="showGrid()">← Retour aux articles</button>
+    <div class="art-header">
+      <div class="cat">${a.cat}</div>
+      <h1>${a.title}</h1>
+      <div class="meta"><span>📅 ${a.date}</span><span>⏱ ${a.readTime} de lecture</span></div>
+    </div>
+    <div class="art-content">${buildContent(a.body)}</div>
+    <div style="margin-top:40px"><button class="back-btn" onclick="showGrid()">← Retour aux articles</button></div>
+  `;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+A.forEach(a => {
+  const card = document.createElement('div');
+  card.className = 'article-card';
+  card.innerHTML = `
+    <div class="article-thumb">${a.icon}</div>
+    <div class="article-body">
+      <div class="article-cat">${a.cat}</div>
+      <h2>${a.title}</h2>
+      <p>${a.summary}</p>
+      <div class="article-meta"><span>📅 ${a.date}</span><span>⏱ ${a.readTime}</span></div>
+      <button class="read-btn" onclick="openArticle(${a.id})">Lire l'article →</button>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>
